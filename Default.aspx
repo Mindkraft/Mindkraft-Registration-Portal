@@ -1,5 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml/DTD/xhtm1-transitional.dtd">
 
+<!--
+LOGIN PAGE FOR MINDKRAFT REGISTRATION PORTAL
+-->
+
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
         <title></title>
