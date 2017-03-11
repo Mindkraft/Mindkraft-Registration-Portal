@@ -8,3 +8,5 @@ Now we have to put a dynamic table below it to display all those who registered 
 
 Matlab.. once you scan your details should be displayed in the table section.
 SUNDAY the entire day i'll be in city. SO wont be doing any committing file in the repository. You if possible and if you get time work on the dynamic table. 
+
+Also check the "Projects" tab when you get time. Have put up TODO list, In Process list, and Completed list which is currently empty now.. 
