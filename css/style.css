@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Forque";
-    src: url(fonts/Forque.ttf) format("truetype");
+    src: url(../fonts/Forque.ttf) format("truetype");
 }
 
 body {
