@@ -14,7 +14,7 @@ body {
     width: 500px;
     height: 400px;
     text-align: center;
-    background-color: rgba(230,236,236,0.7);
+    background-color: rgba(230,236,236,0.6);
     border-radius: 4px;
     margin: 0 auto;
     margin-top: 150px;
@@ -39,7 +39,7 @@ input[type="text"], input[type="password"] {
     width: 300px;
     font-size: 18px;
     margin-bottom: 20px;
-    padding-left: 30px;
+    padding-left: 32px;
     background-color: #fff;
     border-radius: 4px;
 }
@@ -77,4 +77,10 @@ a {
 a:hover {
     color: #fff !Important;
     text-decoration: none !Important;
+}
+
+/* text box blue glow on focus */
+input[type="text"]:focus, input[type="password"]:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  border: 1.5px solid rgba(81, 203, 238, 1);
 }
