@@ -1,0 +1,21 @@
+.jumbotron {
+    background-image: url(../img/wide.jpg);
+    padding-top: 10px; 
+    margin-top: 0px; 
+    margin-left: -15px; 
+    margin-right: -15px;
+    border-radius: 0px !Important;
+}
+
+h1 {
+    color: #fff !Important;
+    font-family: 'Baloo Bhaina', cursive;
+    padding-top: 0px;  
+    font-weight: 600;
+}
+
+input[type="text"] {
+    height: 60px; 
+    margin-top: 10px; 
+    font-size: 30px;
+}

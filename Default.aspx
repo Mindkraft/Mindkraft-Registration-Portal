@@ -23,7 +23,7 @@
                 <h1>Mindkraft</h1>
             </div>
             <br><br>
-            <form id="form1" runat="server" method="post">
+            <form id="form1" runat="server" method="post" action="register.php">
                     <div class="form-input">
                         <input type="text" name="username" placeholder="Register Number" autofocus>
                     </div>
