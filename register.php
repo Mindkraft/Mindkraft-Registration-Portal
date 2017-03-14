@@ -7,23 +7,8 @@
         <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     </head>
-    <script>
-        function showUser(str) {
-             
-            
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("GET","getuser.php?q="+str,true);
-            xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").innerHTML = this.responseText;
-                }
-            };
-        
-        xmlhttp.send();
-            $("#txtHint").focus();
-}
-</script>
 <style>
 table {
     width: 100%;
@@ -42,15 +27,23 @@ table, td, th {
       <form method="get">
         <div class="form-group">
             <input class="form-control input-lg text-center" id="inputlg" name="user" type="text" 
-                   autofocus placeholder="Enter or Scan your Register Number" style="" onchange="showUser(this.value)">
+                   autofocus placeholder="Enter or Scan your Register Number" style="" onchange="">
                 
         </div>  
       </form>
       </div>
-      <div id="txtHint"><b></b></div>
+      <div id="txtHint"><table>
+                <tr>
+                <th>Registration Number</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Date</th>
+                </tr></div>
 
         <?php
         // put your code here
+        $register = $_GET["user"];
         //Database connectivity
         $dbhost = "localhost";
         $dbuser = "root";
@@ -60,7 +53,25 @@ table, td, th {
         //Select the database
         $dbname = "mindkraft";
         mysqli_select_db($conn, $dbname) or die('Database Error');
+        $sql="INSERT INTO user (rno) VALUES ('$register')";
+        $result=mysqli_query($conn,$sql);
 
+        $sql1="SELECT * FROM register WHERE registerno IN ( SELECT rno FROM user )";
+        $result1=mysqli_query($conn,$sql1);
+                while($row = mysqli_fetch_assoc($result1)) {
+                    echo "<table>";
+                echo "<tr>";
+                echo "<td>" . $row["registerno"] . "</td>";
+                echo "<td>" . $row["name"] . "</td>";
+                echo "<td>" . $row["dept"] . "</td>";
+                echo "<td>" . $row["status"] . "</td>";
+                echo "<td>" . $row["date"] . "</td>";
+                echo "</tr>";
+                }
+                
+            echo "</table>";
+                
+mysqli_close($conn);
        ?>
     
 </div>
