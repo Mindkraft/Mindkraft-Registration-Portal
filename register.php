@@ -1,8 +1,8 @@
 <?php
     require 'db.php';
     if(isset($_SESSION['username']) && !empty($_SESSION['username']) AND ($_SESSION['active'] == 1)) {
-        echo $_SESSION['username'];
-        $_SESSION = array();
+        //echo $_SESSION['username'];
+       
         
     }
     else {
@@ -20,12 +20,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <script>
-            window.onbeforeunload = function() {
-                var confirmClose = confirm('Close?');
-                return confirmClose;
-        }
-    </script>
+        
     </head>
 <style>
 table {
@@ -37,12 +32,29 @@ table, td, th {
     border: 1px solid black;
     padding: 5px;
 }
+    .reg-cell {
+        width: 20%;
+    }
+    .name-cell {
+        width: 30%;
+    }
+    .dept-cell {
+        width: 30%;
+    }
+    .status {
+        width: 20%;
+    }
+    
 </style>
 <body>
 <div class="container-fluid">
     <div class="jumbotron">
+    
+        <?php
+            //echo "<p class='user-display-name'>" . $_SESSION['username'] . "</p>"; 
+        ?>
       <h1 class="text-center">REGISTER HERE</h1>
-      <form method="get">
+      <form method="POST">
         <div class="form-group">
             <input class="form-control input-lg text-center" id="inputlg" name="user" type="text" 
                    autofocus placeholder="Enter or Scan your Register Number" style="" onchange="">
@@ -52,24 +64,23 @@ table, td, th {
       </div>
       <div id="txtHint"><table>
                 <tr>
-                <th>Registration Number</th>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th class="reg-cell">Registration Number</th>
+                <th class="name-cell">Name</th>
+                <th class="dept-cell">Department</th>
+                <th class="status-cell">Status</th>
                 </tr></div>
 
         <?php
         // put your code here
-        $register = $_GET["user"];
+        $register = $_POST["user"];
         //Database connectivity
         $dbhost = "localhost";
         $dbuser = "root";
-        $dbpwd = "";
+        $dbpwd = "root";
         //Open MYSQL connection
         $conn = mysqli_connect($dbhost, $dbuser, $dbpwd) or die("Connection Error");
         //Select the database
-        $dbname = "mindkraft";
+        $dbname = "login";
         mysqli_select_db($conn, $dbname) or die('Database Error');
         $sql="INSERT INTO user (rno) VALUES ('$register')";
         $result=mysqli_query($conn,$sql);
@@ -79,11 +90,10 @@ table, td, th {
                 while($row = mysqli_fetch_assoc($result1)) {
                     echo "<table>";
                 echo "<tr>";
-                echo "<td>" . $row["registerno"] . "</td>";
-                echo "<td>" . $row["name"] . "</td>";
-                echo "<td>" . $row["dept"] . "</td>";
-                echo "<td>" . $row["status"] . "</td>";
-                echo "<td>" . $row["date"] . "</td>";
+                echo "<td class='reg-cell'>" . $row["registerno"] . "</td>";
+                echo "<td class='name-cell'>" . $row["name"] . "</td>";
+                echo "<td class='dept-cell'>" . $row["dept"] . "</td>";
+                echo "<td class='status-cell'>" . $row["status"] . "</td>";
                 echo "</tr>";
                 }
                 
@@ -95,3 +105,16 @@ mysqli_close($conn);
 </div>
 </body>
 </html>
+
+<!--
+     $_SESSION = array();
+
+
+<script>
+            
+            window.onbeforeunload = function() {
+                var confirmClose = confirm('Close?');
+                return confirmClose;
+        }
+    </script>
+-->
