@@ -1,3 +1,15 @@
+<?php
+    require 'db.php';
+    if(isset($_SESSION['username']) && !empty($_SESSION['username']) AND ($_SESSION['active'] == 1)) {
+        echo $_SESSION['username'];
+        $_SESSION = array();
+        
+    }
+    else {
+        header("location: index.php");
+    }
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml/DTD/xhtm1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
@@ -8,6 +20,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+        <script>
+            window.onbeforeunload = function() {
+                var confirmClose = confirm('Close?');
+                return confirmClose;
+        }
+    </script>
     </head>
 <style>
 table {
