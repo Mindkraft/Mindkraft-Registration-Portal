@@ -68,25 +68,34 @@ table, td, th {
                 <th class="name-cell">Name</th>
                 <th class="dept-cell">Department</th>
                 <th class="status-cell">Status</th>
+                <th class="status-cell">Date</th>
                 </tr></div>
 
         <?php
         // put your code here
+        error_reporting(0);
+
         $register = $_POST["user"];
         //Database connectivity
         $dbhost = "localhost";
         $dbuser = "root";
-        $dbpwd = "root";
+        $dbpwd = "";
         //Open MYSQL connection
         $conn = mysqli_connect($dbhost, $dbuser, $dbpwd) or die("Connection Error");
         //Select the database
         $dbname = "login";
         mysqli_select_db($conn, $dbname) or die('Database Error');
-        $sql="INSERT INTO user (rno) VALUES ('$register')";
-        $result=mysqli_query($conn,$sql);
 
-        $sql1="SELECT * FROM register WHERE registerno IN ( SELECT rno FROM user )";
-        $result1=mysqli_query($conn,$sql1);
+        
+        if (isset($_POST['user']))    
+        {    
+          // Instructions if $_POST['user'] exist    
+            # code...
+            $sql="INSERT INTO user (rno) VALUES ('$register')";
+            $result=mysqli_query($conn,$sql);
+
+            $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno";
+            $result1=mysqli_query($conn,$sql1);
                 while($row = mysqli_fetch_assoc($result1)) {
                     echo "<table>";
                 echo "<tr>";
@@ -94,10 +103,15 @@ table, td, th {
                 echo "<td class='name-cell'>" . $row["name"] . "</td>";
                 echo "<td class='dept-cell'>" . $row["dept"] . "</td>";
                 echo "<td class='status-cell'>" . $row["status"] . "</td>";
+                echo "<td class='status-cell'>" . $row["cdate"] . "</td>";
                 echo "</tr>";
                 }
                 
             echo "</table>";
+        }
+            
+        
+        
                 
 mysqli_close($conn);
        ?>
