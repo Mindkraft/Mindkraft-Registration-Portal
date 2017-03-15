@@ -41,7 +41,7 @@ table, td, th {
     .dept-cell {
         width: 30%;
     }
-    .status {
+    .status-cell {
         width: 20%;
     }
     
