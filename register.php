@@ -60,7 +60,9 @@ table {
                 
         </div>  
       </form>
+      <div id="status"></div>
       </div>
+
       <div id="txtHint"><table class="table table-bordered table-hover my-table table-top text-center">
                 <tr>
                 <th class="reg-cell text-center">REGISTRATION NO.</th>
@@ -90,12 +92,22 @@ table {
         {    
           // Instructions if $_POST['user'] exist    
             # code...
-            $sql="INSERT INTO user (rno) VALUES ('$register')";
-            $result=mysqli_query($conn,$sql);
-            $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno";
-            $result1=mysqli_query($conn,$sql1);
-            if(mysqli_query($conn,$sql1)) {
-                echo "hehh";
+            //$sql="INSERT INTO user (rno) VALUES ('$register')";
+            //$result=mysqli_query($conn,$sql);
+            $sql0="SELECT registerno FROM register WHERE register.registerno='$register'";
+            $res=mysqli_query($conn,$sql0);
+            if(mysqli_num_rows($res) == 0 ){
+               echo "<script language='javascript'>";
+               echo "alert('Register Number NOT REGISTERED .')";
+               echo "</script>";
+            }
+            else{
+                $sql="INSERT INTO user (rno) VALUES ('$register')";
+                $result=mysqli_query($conn,$sql);
+
+                $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno";
+                $result1=mysqli_query($conn,$sql1);
+
                 while($row = mysqli_fetch_assoc($result1)) {
                 echo "<table class='table table-bordered table-hover my-table'>";
                 echo "<tr>";
@@ -106,21 +118,13 @@ table {
                 echo "<td class='date-cell'>" . $row["cdate"] . "</td>";
                 echo "</tr>";
                 }
+                echo "</table>";
+
             }
-            else {
-                echo "hello";
-                $sql = "DELETE from user WHERE rno = '$register'";
-                mysqli_query($conn, $sql);
-            }
-                
-            echo "</table>";
-        }
-            
-        
-        
-                
-mysqli_close($conn);
-       ?>
+               
+        }          
+    mysqli_close($conn);
+?>
     
 </div>
 </body>
