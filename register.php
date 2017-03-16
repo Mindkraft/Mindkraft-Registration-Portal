@@ -28,21 +28,21 @@ table {
     border-collapse: collapse;
 }
 
-table, td, th {
-    border: 1px solid black;
-    padding: 5px;
-}
+
     .reg-cell {
-        width: 20%;
+        width: 15%;
     }
     .name-cell {
-        width: 30%;
+        width: 25%;
     }
     .dept-cell {
         width: 30%;
     }
     .status-cell {
-        width: 20%;
+        width: 15%;
+    }
+    .date-cell {
+        width: 15%;
     }
     
 </style>
@@ -54,22 +54,21 @@ table, td, th {
             //echo "<p class='user-display-name'>" . $_SESSION['username'] . "</p>"; 
         ?>
       <h1 class="text-center">REGISTER HERE</h1>
-      <form method="POST">
+      <form method="POST" autocomplete="off">
         <div class="form-group">
-            <input class="form-control input-lg text-center" id="inputlg" name="user" type="text" 
-                   autofocus placeholder="Enter or Scan your Register Number" style="" onchange="">
+            <input class="form-control input-lg text-center" id="inputlg" name="user" type="text" autofocus placeholder="Enter or Scan your Register Number" style="" onchange="">
                 
         </div>  
       </form>
       </div>
-      <div id="txtHint"><table>
+      <div id="txtHint"><table class="table table-bordered table-hover my-table table-top text-center">
                 <tr>
-                <th class="reg-cell">Registration Number</th>
-                <th class="name-cell">Name</th>
-                <th class="dept-cell">Department</th>
-                <th class="status-cell">Status</th>
-                <th class="status-cell">Date</th>
-                </tr></div>
+                <th class="reg-cell text-center">REGISTRATION NO.</th>
+                <th class="name-cell">NAME</th>
+                <th class="dept-cell">DEPARTMENT</th>
+                <th class="status-cell text-center">STATUS</th>
+                <th class="date-cell text-center">DATE</th>
+                </tr></table></div>
 
         <?php
         // put your code here
@@ -93,19 +92,26 @@ table, td, th {
             # code...
             $sql="INSERT INTO user (rno) VALUES ('$register')";
             $result=mysqli_query($conn,$sql);
-
             $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno";
             $result1=mysqli_query($conn,$sql1);
+            if(mysqli_query($conn,$sql1)) {
+                echo "hehh";
                 while($row = mysqli_fetch_assoc($result1)) {
-                    echo "<table>";
+                echo "<table class='table table-bordered table-hover my-table'>";
                 echo "<tr>";
-                echo "<td class='reg-cell'>" . $row["registerno"] . "</td>";
+                echo "<td class='reg-cell text-center'>" . $row["registerno"] . "</td>";
                 echo "<td class='name-cell'>" . $row["name"] . "</td>";
                 echo "<td class='dept-cell'>" . $row["dept"] . "</td>";
-                echo "<td class='status-cell'>" . $row["status"] . "</td>";
-                echo "<td class='status-cell'>" . $row["cdate"] . "</td>";
+                echo "<td class='status-cell text-center'>" . $row["status"] . "</td>";
+                echo "<td class='date-cell'>" . $row["cdate"] . "</td>";
                 echo "</tr>";
                 }
+            }
+            else {
+                echo "hello";
+                $sql = "DELETE from user WHERE rno = '$register'";
+                mysqli_query($conn, $sql);
+            }
                 
             echo "</table>";
         }
