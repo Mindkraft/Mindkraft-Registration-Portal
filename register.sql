@@ -1,46 +1,140 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: Mar 15, 2017 at 08:26 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+<?php
+    require 'db.php';
+    if(isset($_SESSION['username']) && !empty($_SESSION['username']) AND ($_SESSION['active'] == 1)) {
+        //echo $_SESSION['username'];
+       
+        
+    }
+    else {
+        header("location: index.php");
+    }
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml/DTD/xhtm1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head runat="server">
+        <title>Mindkraft Registration Portal</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/register-styles.css">
+        <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        
+    </head>
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+    .reg-cell {
+        width: 15%;
+    }
+    .name-cell {
+        width: 25%;
+    }
+    .dept-cell {
+        width: 30%;
+    }
+    .status-cell {
+        width: 15%;
+    }
+    .date-cell {
+        width: 15%;
+    }
+    
+</style>
+<body>
+<div class="container-fluid">
+    <div class="jumbotron">
+    
+        <?php
+            //echo "<p class='user-display-name'>" . $_SESSION['username'] . "</p>"; 
+        ?>
+      <h1 class="text-center">REGISTER HERE</h1>
+      <form method="POST" autocomplete="off">
+        <div class="form-group">
+            <input class="form-control input-lg text-center" id="inputlg" name="user" type="text" autofocus placeholder="Enter or Scan your Register Number" style="" onchange="">
+                
+        </div>  
+      </form>
+      </div>
+      <div id="txtHint"><table class="table table-bordered table-hover my-table table-top text-center">
+                <tr>
+                <th class="reg-cell text-center">REGISTRATION NO.</th>
+                <th class="name-cell">NAME</th>
+                <th class="dept-cell">DEPARTMENT</th>
+                <th class="status-cell text-center">STATUS</th>
+                <th class="date-cell text-center">DATE</th>
+                </tr></table></div>
 
---
--- Database: `login`
---
+        <?php
+        // put your code here
+        error_reporting(0);
 
--- --------------------------------------------------------
+        $register = $_POST["user"];
+        //Database connectivity
+        $dbhost = "localhost";
+        $dbuser = "root";
+        $dbpwd = "";
+        //Open MYSQL connection
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpwd) or die("Connection Error");
+        //Select the database
+        $dbname = "login";
+        mysqli_select_db($conn, $dbname) or die('Database Error');
 
---
--- Table structure for table `register`
---
+        
+        if (isset($_POST['user']))    
+        {    
+          // Instructions if $_POST['user'] exist    
+            # code...
+            $sql="INSERT INTO user (rno) VALUES ('$register')";
+            $result=mysqli_query($conn,$sql);
+            $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno";
+            $result1=mysqli_query($conn,$sql1);
+            if(mysqli_query($conn,$sql1)) {
+                echo "hehh";
+                while($row = mysqli_fetch_assoc($result1)) {
+                echo "<table class='table table-bordered table-hover my-table'>";
+                echo "<tr>";
+                echo "<td class='reg-cell text-center'>" . $row["registerno"] . "</td>";
+                echo "<td class='name-cell'>" . $row["name"] . "</td>";
+                echo "<td class='dept-cell'>" . $row["dept"] . "</td>";
+                echo "<td class='status-cell text-center'>" . $row["status"] . "</td>";
+                echo "<td class='date-cell'>" . $row["cdate"] . "</td>";
+                echo "</tr>";
+                }
+            }
+            else {
+                echo "hello";
+                $sql = "DELETE from user WHERE rno = '$register'";
+                mysqli_query($conn, $sql);
+            }
+                
+            echo "</table>";
+        }
+            
+        
+        
+                
+mysqli_close($conn);
+       ?>
+    
+</div>
+</body>
+</html>
 
-CREATE TABLE `register` (
-  `registerno` varchar(20) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `dept` varchar(40) NOT NULL,
-  `status` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+<!--
+     $_SESSION = array();
 
---
--- Dumping data for table `register`
---
 
-INSERT INTO `register` (`registerno`, `name`, `dept`, `status`) VALUES
-('UR14CS179', 'D PAULWIN JEBA', 'COMPUTER SCIENCE AND ENGINEERING', 'REGISTERED'),
-('UR14BT013', 'NEETU MANOJ', 'BIOTECHNOLOGY AND ENGINEERING', 'REGISTERED');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+<script>
+            
+            window.onbeforeunload = function() {
+                var confirmClose = confirm('Close?');
+                return confirmClose;
+        }
+    </script>
+-->
