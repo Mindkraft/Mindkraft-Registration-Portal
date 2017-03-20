@@ -80,7 +80,7 @@ table {
         //Database connectivity
         $dbhost = "localhost";
         $dbuser = "root";
-        $dbpwd = "";
+        $dbpwd = "root";
         //Open MYSQL connection
         $conn = mysqli_connect($dbhost, $dbuser, $dbpwd) or die("Connection Error");
         //Select the database
@@ -100,6 +100,21 @@ table {
                echo "<script language='javascript'>";
                echo "alert('Register Number NOT REGISTERED .')";
                echo "</script>";
+                
+                $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno ORDER BY cdate DESC";
+                $result1=mysqli_query($conn,$sql1);
+
+                while($row = mysqli_fetch_assoc($result1)) {
+                echo "<table class='table table-bordered table-hover my-table'>";
+                echo "<tr>";
+                echo "<td class='reg-cell text-center'>" . $row["registerno"] . "</td>";
+                echo "<td class='name-cell'>" . $row["name"] . "</td>";
+                echo "<td class='dept-cell'>" . $row["dept"] . "</td>";
+                echo "<td class='status-cell text-center'>" . $row["status"] . "</td>";
+                echo "<td class='date-cell'>" . $row["cdate"] . "</td>";
+                echo "</tr>";
+                }
+                echo "</table>";
             }
             else{
                 $sql="INSERT INTO user (rno) VALUES ('$register')";
