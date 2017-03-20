@@ -105,7 +105,7 @@ table {
                 $sql="INSERT INTO user (rno) VALUES ('$register')";
                 $result=mysqli_query($conn,$sql);
 
-                $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno";
+                $sql1="SELECT register.* , user.* FROM register, user WHERE register.registerno = user.rno ORDER BY cdate DESC";
                 $result1=mysqli_query($conn,$sql1);
 
                 while($row = mysqli_fetch_assoc($result1)) {
